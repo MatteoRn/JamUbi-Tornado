@@ -12,10 +12,13 @@ public class WeaponDataSO : ScriptableObject
     public int bulletsPerShot = 1;
     public float spread = 0f;
     public float recoilForce = 0f;
+    public float reloadTime = 2f;
+    public int magazineSize = 10;
 
     [Header("Projectile")]
     public GameObject bulletPrefab;
     public BulletDataSO bulletData;
+
 
     [Header("FX")]
     public GameObject muzzleFlash;

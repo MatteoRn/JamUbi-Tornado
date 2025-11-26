@@ -18,6 +18,8 @@ MonoBehaviour:
   bulletsPerShot: 1
   spread: 0
   recoilForce: 0
+  reloadTime: 2
+  magazineSize: 10
   bulletPrefab: {fileID: 6785481244111444750, guid: 4f7309473ce902b46a2ed81b2253b3ae, type: 3}
   bulletData: {fileID: 11400000, guid: 3b560958c63fb434187999930112936e, type: 2}
   muzzleFlash: {fileID: 0}

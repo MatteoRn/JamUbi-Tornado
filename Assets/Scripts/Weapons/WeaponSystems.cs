@@ -10,7 +10,9 @@ public class WeaponSystems : MonoBehaviour
 
     private PlayerInputActions _input;
     private float nextFireTime;
+    private bool isReloading = false;
 
+    private int currentAmmo;
     private Vector2 direction;
 
     void Awake()
@@ -22,6 +24,7 @@ public class WeaponSystems : MonoBehaviour
     {
         _input.Enable();
         _input.Combat.Fire.performed += ctx => TryShoot();
+        _input.Combat.Reload.performed += ctx => StartReload();
     }
 
     void OnDisable()
@@ -29,7 +32,15 @@ public class WeaponSystems : MonoBehaviour
         _input.Disable();
     }
 
-    void Update() => AimAtMouse();
+    void Start()
+    {
+        currentAmmo = currentWeapon.magazineSize;
+    }
+
+    void Update()
+    {
+        AimAtMouse();
+    }
 
     void AimAtMouse()
     {
@@ -39,34 +50,61 @@ public class WeaponSystems : MonoBehaviour
 
         direction = mouseWorld - weaponPivot.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
         weaponPivot.rotation = Quaternion.Euler(0, 0, angle);
     }
 
+    // === TRY SHOOT ===
     void TryShoot()
     {
+        if (isReloading) return;
+        if (currentAmmo <= 0)
+        {
+            StartReload();
+            return;
+        }
         if (Time.time < nextFireTime) return;
 
         Shoot();
-        nextFireTime = Time.time + currentWeapon.fireRate;
+    }
+
+    // === RELOAD ===
+    public void StartReload()
+    {
+        if (isReloading) return;
+        isReloading = true;
+        Debug.Log("Reloading...");
+        Invoke(nameof(FinishReload), currentWeapon.reloadTime);
+    }
+
+    void FinishReload()
+    {
+        isReloading = false;
+        currentAmmo = currentWeapon.magazineSize;
+        Debug.Log("Reload complete!");
     }
 
     void Shoot()
     {
+        currentAmmo--;
+
+        nextFireTime = Time.time + currentWeapon.fireRate;
+
         if (currentWeapon.muzzleFlash)
             Instantiate(currentWeapon.muzzleFlash, firePoint.position, firePoint.rotation);
 
-        for (int i = 0; i < currentWeapon.bulletsPerShot; i++)
+        int count = currentWeapon.bulletsPerShot;
+        float totalSpread = currentWeapon.spread;
+
+        for (int i = 0; i < count; i++)
         {
+            float t = (count == 1) ? 0f : (float)i / (count - 1);
+            float angle = Mathf.Lerp(-totalSpread, totalSpread, t);
+
+            Vector2 shootDir = Quaternion.Euler(0, 0, angle) * firePoint.right;
+
             GameObject go = Instantiate(currentWeapon.bulletPrefab, firePoint.position, firePoint.rotation);
             Bullet bullet = go.GetComponent<Bullet>();
-
-            Vector2 shootDir = (firePoint.position - weaponPivot.position).normalized;
-            float spreadAngle = Random.Range(-currentWeapon.spread, currentWeapon.spread);
-            shootDir = Quaternion.Euler(0, 0, spreadAngle) * shootDir;
-
             bullet.Init(currentWeapon.bulletData, shootDir);
-
         }
     }
 }
