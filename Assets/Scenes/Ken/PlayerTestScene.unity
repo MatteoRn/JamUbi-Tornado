@@ -385,8 +385,8 @@ MonoBehaviour:
   terrainPrefabs:
   - {fileID: 7548486816574400466, guid: aac15861b22353e4e894116b1f815d4a, type: 3}
   - {fileID: 7548486816574400466, guid: 478860634280a89439f562fd36ce5538, type: 3}
-  chunkSize: 25
-  viewDistance: 2
+  chunkSize: 2
+  viewDistance: 10
   chunkLifespan: 5
 --- !u!4 &647411301
 Transform:
@@ -403,6 +403,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &910019415 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1461086426824252095, guid: 73174757610ad374088a85663482aa9d, type: 3}
+  m_PrefabInstance: {fileID: 4999747497661975490}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a76aedf5ed3f8354aa6b8f9e2d29c058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarHealthSystems
 --- !u!1 &982982023
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,6 +804,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1897443845 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9146142243522768356, guid: 73174757610ad374088a85663482aa9d, type: 3}
+  m_PrefabInstance: {fileID: 4999747497661975490}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd09ebfc8e13d3d47854bd7f53edb3fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponSystems
 --- !u!1 &1901990985
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,6 +824,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1901990986}
+  - component: {fileID: 1901990987}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -824,6 +847,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1901990987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901990985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73ebca5f18f32284dbd6b41b9b3452b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cardmanager
+  healthSystem: {fileID: 910019415}
+  weaponSystem: {fileID: 1897443845}
 --- !u!1001 &4999747497661975490
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -904,6 +941,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1461086426824252095, guid: 73174757610ad374088a85663482aa9d, type: 3}
+      propertyPath: HealthBar
+      value: 
+      objectReference: {fileID: 982982026}
     - target: {fileID: 3180285142469489394, guid: 73174757610ad374088a85663482aa9d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.563
@@ -957,10 +998,10 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1901990986}
   - {fileID: 504143170}
   - {fileID: 4999747497661975490}
   - {fileID: 1492736346}
-  - {fileID: 1901990986}
   - {fileID: 647411301}
   - {fileID: 1356549565}
   - {fileID: 1240486944}
