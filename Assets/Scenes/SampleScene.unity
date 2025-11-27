@@ -490,7 +490,7 @@ Transform:
   m_GameObject: {fileID: 766327767}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6, y: 2.11, z: 0}
+  m_LocalPosition: {x: 0.03, y: 2.09, z: 0}
   m_LocalScale: {x: 1.3406, y: 1.3406, z: 1.3406}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -511,6 +511,14 @@ MonoBehaviour:
   radius: 1.5
   attractionForce: 5
   tornadoMode: 1
+  addSize: 0.2
+  maxSize: 10
+  timeBetweenChangingSize: 1
+  rotationSpeed: 180
+  baseRadius: 3
+  radiusVariation: 1
+  variationSpeed: 1
+  moveSpeed: 3
 --- !u!1 &1294013412
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,6 +687,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa59b8e5ebc910948922a38c40f0c70b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstacle
+  onFinishAspireByTornado:
+    m_PersistentCalls:
+      m_Calls: []
+  onInTornadoRadius:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1001 &1376312140
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 944776321901681461, guid: 73174757610ad374088a85663482aa9d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.572659
+      objectReference: {fileID: 0}
+    - target: {fileID: 944776321901681461, guid: 73174757610ad374088a85663482aa9d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.9364974
+      objectReference: {fileID: 0}
+    - target: {fileID: 944776321901681461, guid: 73174757610ad374088a85663482aa9d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 944776321901681461, guid: 73174757610ad374088a85663482aa9d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 944776321901681461, guid: 73174757610ad374088a85663482aa9d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 944776321901681461, guid: 73174757610ad374088a85663482aa9d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 944776321901681461, guid: 73174757610ad374088a85663482aa9d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 944776321901681461, guid: 73174757610ad374088a85663482aa9d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 944776321901681461, guid: 73174757610ad374088a85663482aa9d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 944776321901681461, guid: 73174757610ad374088a85663482aa9d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851624246413672729, guid: 73174757610ad374088a85663482aa9d, type: 3}
+      propertyPath: m_Name
+      value: Car
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 73174757610ad374088a85663482aa9d, type: 3}
 --- !u!1 &1758838645
 GameObject:
   m_ObjectHideFlags: 0
@@ -778,3 +849,4 @@ SceneRoots:
   - {fileID: 1758838647}
   - {fileID: 766327771}
   - {fileID: 1294013417}
+  - {fileID: 1376312140}

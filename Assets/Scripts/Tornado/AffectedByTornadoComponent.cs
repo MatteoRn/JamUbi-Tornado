@@ -2,9 +2,10 @@ using UnityEngine;
 using UnityEngine.Events;
 using static Tornado;
 
-public class Obstacle : MonoBehaviour, ITornadable
+public class AffectedByTornadoComponent : MonoBehaviour, ITornadable
 {
     public UnityEvent onFinishAspireByTornado = new UnityEvent();
+    public UnityEvent onInTornadoRadius = new UnityEvent();
     Rigidbody2D body;
     private void Awake()
     {
@@ -17,9 +18,23 @@ public class Obstacle : MonoBehaviour, ITornadable
     Tornado tornado;
     private void Update()
     {
+        if (tornado != null && Vector3.Distance(tornado.transform.position, transform.position) <= tornado.radius)
+        {
+            onInTornadoRadius.Invoke();
+        }
+
+
         if (tornado != null && Vector3.Distance(tornado.transform.position, transform.position) <= tornado.radius / 3f)
         {
             onFinishAspireByTornado.Invoke();
+
+            switch (tornado.tornadoMode)
+            {
+                case TornadoMode.Attraction:
+                    body.AddForce(-(tornado.transform.position - transform.position).normalized * tornado.attractionForce, ForceMode2D.Impulse);
+                    break;
+                default: break;
+            }
         }
     }
     public void OnAffected(Tornado pTornado)

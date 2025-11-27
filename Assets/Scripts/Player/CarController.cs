@@ -14,9 +14,16 @@ public class CarController : MonoBehaviour
     private PlayerInputActions _PlayerInput;
     private float _MoveInput;
 
+    public static CarController Instance { get; private set; }
+
     private float initialRotation;
     private void Awake()
     {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        Instance = this;
         _PlayerInput = new PlayerInputActions();
     }
 
@@ -57,4 +64,5 @@ public class CarController : MonoBehaviour
         Vector2 lSideVel = transform.right * Vector2.Dot(_RigidBody.linearVelocity, transform.right);
         _RigidBody.linearVelocity = lForwardVel + lSideVel * driftFactor;
     }
+    
 }
