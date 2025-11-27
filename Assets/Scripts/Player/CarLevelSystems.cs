@@ -10,6 +10,7 @@ public class CarLevelSystems : MonoBehaviour
     [Header("XP Curve")]
     public float xpMultiplier = 1.3f;
 
+    public UpgradeUI upgradeUI;
     void Start()
     {
         Debug.Log($"Level system initialized ? Level {level}");
@@ -33,7 +34,7 @@ public class CarLevelSystems : MonoBehaviour
     {
         level++;
         xpToNextLevel = Mathf.RoundToInt(xpToNextLevel * xpMultiplier);
-
+        upgradeUI.ShowCards();
         Debug.Log($"LEVEL UP ! Nouveau niveau : {level}");
     }
 }

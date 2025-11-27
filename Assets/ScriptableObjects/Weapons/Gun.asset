@@ -15,8 +15,8 @@ MonoBehaviour:
   weaponName: Gun
   weaponSprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   fireRate: 0.2
-  bulletsPerShot: 1
-  spread: 0
+  bulletsPerShot: 5
+  spread: 10
   recoilForce: 0
   reloadTime: 2
   magazineSize: 10
