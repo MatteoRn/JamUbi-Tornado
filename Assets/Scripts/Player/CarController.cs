@@ -14,6 +14,7 @@ public class CarController : MonoBehaviour
     private PlayerInputActions _PlayerInput;
     private float _MoveInput;
 
+    private float initialRotation;
     private void Awake()
     {
         _PlayerInput = new PlayerInputActions();
@@ -33,14 +34,19 @@ public class CarController : MonoBehaviour
     void Start()
     {
         _RigidBody = GetComponent<Rigidbody2D>();
+        initialRotation = _RigidBody.rotation;
     }
 
     void FixedUpdate()
     {
         _RigidBody.linearVelocity = transform.up * forwardSpeed;
 
-        float lDirectionX = _MoveInput;
-        _RigidBody.MoveRotation(_RigidBody.rotation - lDirectionX * turnSpeed * Time.fixedDeltaTime);
+        float steer = _MoveInput;
+        float newRot = _RigidBody.rotation - steer * turnSpeed * Time.fixedDeltaTime;
+        float clamped = Mathf.Clamp(newRot, initialRotation - 70f, initialRotation + 70f);
+
+        _RigidBody.MoveRotation(clamped);
+
         ApplyDrift();
     }
 
