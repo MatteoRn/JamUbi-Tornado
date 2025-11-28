@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Tornado : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class Tornado : MonoBehaviour
     {
         None, Attraction, Repulsion
     }
+
+    public float life = 100f;
+    public int damage = 1;
 
     public float radius = 1.5f;
     public float attractionForce = 5f;
@@ -29,6 +33,8 @@ public class Tornado : MonoBehaviour
     public float moveSpeed = 3f;
 
     Vector3 startPosition;
+
+    public UnityEvent onDeath = new UnityEvent();
 
     List<ITornadable> affectedElement = new List<ITornadable>();
 
@@ -62,6 +68,17 @@ public class Tornado : MonoBehaviour
         startPosition += ((CarController.Instance.transform.position - transform.position).normalized * moveSpeed * Time.deltaTime);
     }
 
+    private void UpdateLife(float damage)
+    {
+        life -= damage;
+
+        if (life < 0)
+        {
+            onDeath.Invoke();
+            Destroy(gameObject);
+        }
+    }
+
     IEnumerator UpdateSize()
     {
         while (transform.localScale.x < maxSize)
@@ -75,6 +92,13 @@ public class Tornado : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Bullet bullet = collision.gameObject.GetComponent<Bullet>();
+        if (bullet)
+        {
+            UpdateLife(bullet.damage);
+            return;
+        }
+
         ITornadable lTornadable = collision.gameObject.GetComponent<ITornadable>();
         if (lTornadable != null)
         {

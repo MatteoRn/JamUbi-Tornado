@@ -5,8 +5,11 @@ using static Tornado;
 public class AffectedByTornadoComponent : MonoBehaviour, ITornadable
 {
     public UnityEvent onFinishAspireByTornado = new UnityEvent();
-    public UnityEvent onInTornadoRadius = new UnityEvent();
+    public UnityEvent<int> onInTornadoRadius = new UnityEvent<int>();
+    public UnityEvent onAffected = new UnityEvent();
     Rigidbody2D body;
+
+    bool isAlreadyAffected = false;
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
@@ -20,7 +23,7 @@ public class AffectedByTornadoComponent : MonoBehaviour, ITornadable
     {
         if (tornado != null && Vector3.Distance(tornado.transform.position, transform.position) <= tornado.radius)
         {
-            onInTornadoRadius.Invoke();
+            onInTornadoRadius.Invoke(tornado.damage);
         }
 
 
@@ -31,22 +34,29 @@ public class AffectedByTornadoComponent : MonoBehaviour, ITornadable
             switch (tornado.tornadoMode)
             {
                 case TornadoMode.Attraction:
-                    body.AddForce(-(tornado.transform.position - transform.position).normalized * tornado.attractionForce, ForceMode2D.Impulse);
+                    body.AddForce(-(tornado.transform.position - transform.position).normalized * tornado.attractionForce, ForceMode2D.Force);
                     break;
                 default: break;
             }
         }
     }
+    public void ResetAffectation()
+    {
+        isAlreadyAffected = false;
+    }
     public void OnAffected(Tornado pTornado)
     {
+        if (isAlreadyAffected) return;
+        isAlreadyAffected = true;
+        onAffected.Invoke();
         tornado = pTornado;
         switch (pTornado.tornadoMode)
         {
             case TornadoMode.Attraction:
-                body.AddForce((pTornado.transform.position - transform.position).normalized * pTornado.attractionForce, ForceMode2D.Impulse);
+                body.AddForce((pTornado.transform.position - transform.position).normalized * pTornado.attractionForce * pTornado.transform.localScale.x, ForceMode2D.Force);
                 break;
             case TornadoMode.Repulsion:
-                body.AddForce(-(pTornado.transform.position - transform.position).normalized * pTornado.attractionForce, ForceMode2D.Impulse);
+                body.AddForce(-(pTornado.transform.position - transform.position).normalized * pTornado.attractionForce * pTornado.transform.localScale.x, ForceMode2D.Force);
                 break;
             default: break;
         }

@@ -5,9 +5,11 @@ public class Bullet : MonoBehaviour
     private BulletDataSO data;
     private Vector2 direction;
     private int pierceRemaining;
+    public float damage = 1f;
 
     public void Init(BulletDataSO bulletData, Vector2 dir)
     {
+        damage = bulletData.damage;
         data = bulletData;
         direction = dir.normalized;
         pierceRemaining = data.maxPierceCount;
@@ -23,6 +25,7 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D hit)
     {
+        if (hit.gameObject.GetComponent<CarController>()) return;
 
         pierceRemaining--;
         if (pierceRemaining <= 0) Destroy(gameObject);
